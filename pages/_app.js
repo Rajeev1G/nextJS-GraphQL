@@ -1,7 +1,7 @@
 import React from 'react';
 import App from 'next/app';
 import { getDataFromTree } from '@apollo/react-ssr';
-
+import '../components/modal.css'
 import withData from '../lib/apollo-client';
 
 class MyApp extends App {

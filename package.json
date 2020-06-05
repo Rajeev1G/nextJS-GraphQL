@@ -26,6 +26,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "sqlite": "^4.0.9",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^4.2.0",
+    "styled-components": "^5.1.1"
   }
 }
