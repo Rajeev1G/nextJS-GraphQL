@@ -4,20 +4,24 @@ const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
 
 
-async function getData(id) {
+async function getData(sortVal,id) {
   const db = await sqlite.open({
   filename: '/tmp/database.db',
   driver: sqlite3.Database
-});
-if (id) {
-  const data = await await db.get('select * from Beer where id = ?', [id])
+  });
+  if (id) {
+    const data = await await db.get('select * from Beer where id = ?', [id])
     return data
-}
-else {
-  const data =  await db.all('select * from Beer')
-  console.log(data)
-  return data;
-}
+  }
+  else if (sortVal == 1){
+    const data =  await db.all('select * from Beer ORDER BY name')
+    return data;
+  }
+  else { 
+    const data =  await db.all('select * from Beer')
+    console.log(data)
+    return data;
+  }
 }
 
 async function addData(name, alcoholPercent, description, price, countryOfOrigin) {
@@ -34,7 +38,7 @@ return data;
 
 const typeDefs = gql`
   type Query {
-    beers: [Beer]
+    beers(sortVal: Int!): [Beer]
     beer(id: String!): Beer
   }
   type Mutation {
@@ -52,11 +56,11 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    beers: (_parent, _args, _ctx) => {
-     return getData().then((data)=>  {return data})
+    beers: (_parent, {sortVal}, _ctx) => {
+     return getData(sortVal,null).then((data)=>  {return data})
     },
     beer: (_parent,{id},_ctx) => {
-      return getData(id).then((data)=> {return data})
+      return getData(0,id).then((data)=> {return data})
     }
   },
   Mutation: {

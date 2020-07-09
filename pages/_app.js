@@ -2,11 +2,11 @@ import React from 'react';
 import App from 'next/app';
 import { getDataFromTree } from '@apollo/react-ssr';
 import '../components/modal.css'
-import withData from '../lib/apollo-client';
+import withApollo from '../lib/apollo-client';
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, apollo } = this.props;
+    const { Component, pageProps } = this.props;
     console.log(Component)
     return (
         <Component {...pageProps} />
@@ -15,4 +15,4 @@ class MyApp extends App {
 }
 
 // Wraps all components in the tree with the data provider
-export default withData(MyApp, { getDataFromTree });
+export default withApollo(MyApp, { getDataFromTree });
